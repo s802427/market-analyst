@@ -23,16 +23,15 @@ main{max-width:680px;margin:0 auto;padding:20px 16px 80px}
 .sec{font-size:19px;font-weight:700;display:flex;align-items:center;gap:10px;margin-bottom:16px}
 .num{background:var(--ac);color:#000;border-radius:50%;width:24px;height:24px;display:inline-flex;align-items:center;justify-content:center;font-family:monospace;font-size:12px;font-weight:700;flex-shrink:0}
 .tabs{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
-.tab{background:var(--s2);border:1.5px solid var(--b);border-radius:8px;padding:10px 4px;cursor:pointer;text-align:center;-webkit-appearance:none}
+.tab{background:var(--s2);border:1.5px solid var(--b);border-radius:8px;padding:10px 4px;cursor:pointer;text-align:center;-webkit-appearance:none;color:var(--t)}
 .tab .zh{font-size:11px;color:var(--t2);display:block;margin-bottom:3px}
 .tab .en{font-size:11px;display:block;font-weight:600}
 .tab .bar{height:2px;border-radius:2px;margin-top:7px;opacity:.4}
-.tab.on .bar{opacity:1}.tab.on .en{font-weight:700}
-.tab.pre .bar,.tab.pre.on .en{background:#5b8ff9;color:#5b8ff9}.tab.pre.on{border-color:#5b8ff9}
-.tab.post .bar,.tab.post.on .en{background:#52c97c;color:#52c97c}.tab.post.on{border-color:#52c97c}
-.tab.week .bar,.tab.week.on .en{background:#b57bff;color:#b57bff}.tab.week.on{border-color:#b57bff}
-.tab.month .bar,.tab.month.on .en{background:#ff8c42;color:#ff8c42}.tab.month.on{border-color:#ff8c42}
-.tab .bar{background:currentColor}
+.tab.on .bar{opacity:1}
+.tab.pre .bar{background:#5b8ff9}.tab.pre.on{border-color:#5b8ff9}.tab.pre.on .en{color:#5b8ff9}
+.tab.post .bar{background:#52c97c}.tab.post.on{border-color:#52c97c}.tab.post.on .en{color:#52c97c}
+.tab.week .bar{background:#b57bff}.tab.week.on{border-color:#b57bff}.tab.week.on .en{color:#b57bff}
+.tab.month .bar{background:#ff8c42}.tab.month.on{border-color:#ff8c42}.tab.month.on .en{color:#ff8c42}
 .modes{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .mode{background:var(--s2);border:1.5px solid var(--b);border-radius:8px;padding:14px;cursor:pointer}
 .mode.on{border-color:var(--a2);background:rgba(91,143,249,.08)}
@@ -50,12 +49,6 @@ main{max-width:680px;margin:0 auto;padding:20px 16px 80px}
 .cb{width:16px;height:16px;border:1.5px solid var(--b);border-radius:4px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .rs.on .cb{background:var(--a3);border-color:var(--a3)}
 .rs .sn{font-size:12px;color:var(--t2)}.rs.on .sn{color:var(--t)}
-.langs{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.lc{background:var(--s2);border:1.5px solid var(--b);border-radius:8px;padding:14px;cursor:pointer;text-align:center}
-.lc.on{border-color:var(--ac)}
-.lc .lch{font-size:17px;margin-bottom:4px}
-.lc .lsb{font-size:11px;color:var(--t2);margin-bottom:6px}
-.lc .lpct{font-family:monospace;font-size:13px;color:var(--t2)}.lc.on .lpct{color:var(--ac)}
 .genbtn{width:100%;background:var(--ac);color:#000;border:none;border-radius:12px;padding:16px;font-size:17px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;box-shadow:0 4px 24px rgba(232,197,71,.3);margin-bottom:20px;-webkit-appearance:none}
 .genbtn.loading{background:var(--s2);color:var(--t2);box-shadow:none;cursor:not-allowed}
 .spin{width:18px;height:18px;border:2px solid var(--b);border-top-color:var(--a2);border-radius:50%;animation:sp .7s linear infinite}
@@ -72,7 +65,7 @@ main{max-width:680px;margin:0 auto;padding:20px 16px 80px}
 </head>
 <body>
 <header>
-  <div class="logo">市場分析師<span>v3.0</span></div>
+  <div class="logo">市場分析師<span>v3.1</span></div>
   <div class="live"><div class="dot"></div>即時搜尋</div>
 </header>
 <main>
@@ -107,8 +100,8 @@ main{max-width:680px;margin:0 auto;padding:20px 16px 80px}
   </div>
 
   <div class="card">
-    <div class="sec"><span class="num">5</span>報告結構</div>
-    <div class="secs" id="secList">
+    <div class="sec"><span class="num">3</span>報告結構</div>
+    <div class="secs">
       <div class="rs on" onclick="tog(this)"><div class="cb"><svg width="10" height="8" viewBox="0 0 10 8"><polyline points="1,4 4,7 9,1" stroke="#000" stroke-width="1.8" fill="none"/></svg></div><span class="sn">① 市場總覽</span></div>
       <div class="rs on" onclick="tog(this)"><div class="cb"><svg width="10" height="8" viewBox="0 0 10 8"><polyline points="1,4 4,7 9,1" stroke="#000" stroke-width="1.8" fill="none"/></svg></div><span class="sn">② 突發新聞</span></div>
       <div class="rs on" onclick="tog(this)"><div class="cb"><svg width="10" height="8" viewBox="0 0 10 8"><polyline points="1,4 4,7 9,1" stroke="#000" stroke-width="1.8" fill="none"/></svg></div><span class="sn">③ 技術訊號</span></div>
@@ -117,14 +110,6 @@ main{max-width:680px;margin:0 auto;padding:20px 16px 80px}
       <div class="rs on" onclick="tog(this)"><div class="cb"><svg width="10" height="8" viewBox="0 0 10 8"><polyline points="1,4 4,7 9,1" stroke="#000" stroke-width="1.8" fill="none"/></svg></div><span class="sn">⑥ Reddit 情緒</span></div>
       <div class="rs" id="pnlSec" onclick="tog(this)"><div class="cb"><svg width="10" height="8" viewBox="0 0 10 8"><polyline points="1,4 4,7 9,1" stroke="#000" stroke-width="1.8" fill="none"/></svg></div><span class="sn">⑦ 持倉 P&L</span></div>
       <div class="rs on" onclick="tog(this)"><div class="cb"><svg width="10" height="8" viewBox="0 0 10 8"><polyline points="1,4 4,7 9,1" stroke="#000" stroke-width="1.8" fill="none"/></svg></div><span class="sn">⑧ 明日預覽</span></div>
-    </div>
-  </div>
-
-  <div class="card">
-    <div class="sec"><span class="num">6</span>輸出語言</div>
-    <div class="langs">
-      <div class="lc on" id="lTC" onclick="selLang('TC')"><div class="lch">繁體中文版</div><div class="lsb">Taiwan + HK</div><div class="lpct">89%</div></div>
-      <div class="lc" id="lSC" onclick="selLang('SC')"><div class="lch">簡體中文版</div><div class="lsb">Mainland + NA</div><div class="lpct">11%</div></div>
     </div>
   </div>
 
@@ -147,7 +132,7 @@ main{max-width:680px;margin:0 auto;padding:20px 16px 80px}
 <script>
 const TZH={pre:'盤前日報',post:'盤後日報',week:'週報',month:'月報'};
 const TEN={pre:'Pre-market',post:'Post-market',week:'Weekly',month:'Monthly'};
-let rtype='pre', mode='A', lang='TC';
+let rtype='pre', mode='A';
 
 function selTab(el,t){document.querySelectorAll('.tab').forEach(b=>b.classList.remove('on'));el.classList.add('on');rtype=t;}
 function selMode(m){
@@ -159,7 +144,6 @@ function selMode(m){
   m==='A'?p.classList.add('on'):p.classList.remove('on');
 }
 function tog(el){el.classList.toggle('on');}
-function selLang(l){lang=l;document.getElementById('lTC').classList.toggle('on',l==='TC');document.getElementById('lSC').classList.toggle('on',l==='SC');}
 function getSecs(){return[...document.querySelectorAll('.rs.on .sn')].map(s=>s.textContent.replace(/^[①-⑧]\s/,''));}
 
 async function generate(){
@@ -171,11 +155,10 @@ async function generate(){
   const shares=document.getElementById('shares').value||'';
   const cost=document.getElementById('cost').value||'';
   const trade=document.getElementById('trade').value||'';
-  const lg=lang==='TC'?'繁體中文':'简体中文';
   const today=new Date().toLocaleDateString('zh-TW');
   const modeNote=mode==='A'&&ticker?`投資組合：${ticker}，${shares}股，成本$${cost}，最近交易：${trade}`:'公開版（無個人持倉）';
 
-  const sys=`你是專業市場分析師，用${lg}撰寫金融報告。必須先用web_search搜尋今日真實市場資料（指數、股價、新聞），再根據真實數據生成報告。每個區塊用【區塊名稱】作為標題，3-5句，含具體數字與方向（多頭+、空頭-、中性=）。`;
+  const sys=`你是專業市場分析師，用繁體中文撰寫金融報告。必須先用web_search搜尋今日真實市場資料（指數、股價、新聞），再根據真實數據生成報告。每個區塊用【區塊名稱】作為標題，3-5句，含具體數字與方向（多頭+、空頭-、中性=）。`;
   const usr=`生成${today} ${TZH[rtype]}（${TEN[rtype]}）。${modeNote}。區塊：${secs.join('、')}。請先搜尋今日市場資料再生成。`;
 
   btn.classList.add('loading');
@@ -184,7 +167,7 @@ async function generate(){
   const body=document.getElementById('outBody');
   panel.classList.add('show');
   body.innerHTML='<span style="color:var(--t3)">正在搜尋今日市場資料...</span>';
-  document.getElementById('outLabel').textContent=`${TZH[rtype]} · ${lg} · 即時`;
+  document.getElementById('outLabel').textContent=`${TZH[rtype]} · 繁體中文 · 即時`;
   document.getElementById('outTime').textContent=new Date().toLocaleTimeString('zh-TW');
   setTimeout(()=>panel.scrollIntoView({behavior:'smooth',block:'start'}),100);
 
@@ -200,13 +183,20 @@ async function generate(){
         messages:[{role:'user',content:usr}]
       })
     });
-    if(!r.ok)throw new Error(`HTTP ${r.status}`);
+    if(!r.ok){
+      const errText=await r.text();
+      throw new Error(`HTTP ${r.status}: ${errText.slice(0,200)}`);
+    }
     const d=await r.json();
     if(d.error)throw new Error(d.error.message||JSON.stringify(d.error));
 
     if(d.stop_reason==='tool_use'){
       btn.innerHTML='<div class="spin"></div><span>分析數據中...</span>';
-      const toolResults=d.content.filter(b=>b.type==='tool_use').map(b=>({type:'tool_result',tool_use_id:b.id,content:'搜尋完成'}));
+      const toolResults=d.content.filter(b=>b.type==='tool_use').map(b=>({
+        type:'tool_result',
+        tool_use_id:b.id,
+        content:'搜尋完成，請根據搜尋結果生成報告。'
+      }));
       const r2=await fetch('/api/chat',{
         method:'POST',
         headers:{'Content-Type':'application/json'},
@@ -215,7 +205,11 @@ async function generate(){
           max_tokens:4000,
           system:sys,
           tools:[{type:'web_search_20250305',name:'web_search'}],
-          messages:[{role:'user',content:usr},{role:'assistant',content:d.content},{role:'user',content:toolResults}]
+          messages:[
+            {role:'user',content:usr},
+            {role:'assistant',content:d.content},
+            {role:'user',content:toolResults}
+          ]
         })
       });
       if(!r2.ok)throw new Error(`HTTP ${r2.status}`);
@@ -244,11 +238,21 @@ function renderOut(text,el){
   }).join('');
 }
 
-function copyOut(){const t=document.getElementById('outBody').innerText;if(navigator.clipboard)navigator.clipboard.writeText(t).then(()=>alert('已複製'));else{const a=document.createElement('textarea');a.value=t;document.body.appendChild(a);a.select();document.execCommand('copy');document.body.removeChild(a);alert('已複製');}}
-function shareOut(){const t=document.getElementById('outBody').innerText.slice(0,500)+'...';if(navigator.share)navigator.share({title:'市場分析報告',text:t});else copyOut();}
-function resetOut(){document.getElementById('outPanel').classList.remove('show');document.getElementById('genBtn').innerHTML='<span id="btnTxt">🔍 搜尋 + 生成報告</span>';}
+function copyOut(){
+  const t=document.getElementById('outBody').innerText;
+  if(navigator.clipboard)navigator.clipboard.writeText(t).then(()=>alert('已複製'));
+  else{const a=document.createElement('textarea');a.value=t;document.body.appendChild(a);a.select();document.execCommand('copy');document.body.removeChild(a);alert('已複製');}
+}
+function shareOut(){
+  const t=document.getElementById('outBody').innerText.slice(0,500)+'...';
+  if(navigator.share)navigator.share({title:'市場分析報告',text:t});
+  else copyOut();
+}
+function resetOut(){
+  document.getElementById('outPanel').classList.remove('show');
+  document.getElementById('genBtn').innerHTML='<span id="btnTxt">🔍 搜尋 + 生成報告</span>';
+}
 
-// init
 selMode('A');
 </script>
 
