@@ -1,1 +1,256 @@
+<!DOCTYPE html>
 
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="市場分析師">
+<title>市場分析師</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0a0c10;--s:#12151c;--s2:#1a1f2a;--b:#252b38;--ac:#e8c547;--a2:#5b8ff9;--a3:#52c97c;--a4:#ff6b6b;--t:#e8eaf0;--t2:#8891a8;--t3:#545d72}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+body{background:var(--bg);color:var(--t);font-family:'Noto Serif TC',serif;font-size:15px;min-height:100vh}
+header{position:sticky;top:0;z-index:100;background:rgba(10,12,16,.95);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--b);padding:14px 20px;display:flex;justify-content:space-between;align-items:center}
+.logo{font-size:18px;color:var(--ac);font-weight:700}
+.logo span{color:var(--t3);font-size:11px;margin-left:8px;font-family:monospace}
+.live{background:var(--s2);border:1px solid var(--b);color:var(--t2);font-family:monospace;font-size:11px;padding:3px 10px;border-radius:20px;display:flex;align-items:center;gap:5px}
+.dot{width:6px;height:6px;border-radius:50%;background:var(--a3)}
+main{max-width:680px;margin:0 auto;padding:20px 16px 80px}
+.card{background:var(--s);border:1px solid var(--b);border-radius:12px;padding:20px;margin-bottom:16px}
+.sec{font-size:19px;font-weight:700;display:flex;align-items:center;gap:10px;margin-bottom:16px}
+.num{background:var(--ac);color:#000;border-radius:50%;width:24px;height:24px;display:inline-flex;align-items:center;justify-content:center;font-family:monospace;font-size:12px;font-weight:700;flex-shrink:0}
+.tabs{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.tab{background:var(--s2);border:1.5px solid var(--b);border-radius:8px;padding:10px 4px;cursor:pointer;text-align:center;-webkit-appearance:none}
+.tab .zh{font-size:11px;color:var(--t2);display:block;margin-bottom:3px}
+.tab .en{font-size:11px;display:block;font-weight:600}
+.tab .bar{height:2px;border-radius:2px;margin-top:7px;opacity:.4}
+.tab.on .bar{opacity:1}.tab.on .en{font-weight:700}
+.tab.pre .bar,.tab.pre.on .en{background:#5b8ff9;color:#5b8ff9}.tab.pre.on{border-color:#5b8ff9}
+.tab.post .bar,.tab.post.on .en{background:#52c97c;color:#52c97c}.tab.post.on{border-color:#52c97c}
+.tab.week .bar,.tab.week.on .en{background:#b57bff;color:#b57bff}.tab.week.on{border-color:#b57bff}
+.tab.month .bar,.tab.month.on .en{background:#ff8c42;color:#ff8c42}.tab.month.on{border-color:#ff8c42}
+.tab .bar{background:currentColor}
+.modes{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.mode{background:var(--s2);border:1.5px solid var(--b);border-radius:8px;padding:14px;cursor:pointer}
+.mode.on{border-color:var(--a2);background:rgba(91,143,249,.08)}
+.mode .ml{font-family:monospace;font-size:10px;color:var(--t3);margin-bottom:5px}
+.mode .mn{font-size:15px;font-weight:700;margin-bottom:4px}
+.mode .md{font-size:12px;color:var(--t2)}
+.pform{margin-top:14px;display:flex;flex-direction:column;gap:10px}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.fl label{font-family:monospace;font-size:11px;color:var(--t3);display:block;margin-bottom:4px}
+.fl input{background:var(--s2);border:1px solid var(--b);border-radius:8px;color:var(--t);font-family:monospace;font-size:14px;padding:10px 12px;outline:none;width:100%;-webkit-appearance:none}
+.fl input:focus{border-color:var(--a2)}
+.secs{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.rs{display:flex;align-items:center;gap:8px;background:var(--s2);border:1px solid var(--b);border-radius:8px;padding:10px 12px;cursor:pointer}
+.rs.on{border-color:var(--a3);background:rgba(82,201,124,.06)}
+.cb{width:16px;height:16px;border:1.5px solid var(--b);border-radius:4px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.rs.on .cb{background:var(--a3);border-color:var(--a3)}
+.rs .sn{font-size:12px;color:var(--t2)}.rs.on .sn{color:var(--t)}
+.langs{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.lc{background:var(--s2);border:1.5px solid var(--b);border-radius:8px;padding:14px;cursor:pointer;text-align:center}
+.lc.on{border-color:var(--ac)}
+.lc .lch{font-size:17px;margin-bottom:4px}
+.lc .lsb{font-size:11px;color:var(--t2);margin-bottom:6px}
+.lc .lpct{font-family:monospace;font-size:13px;color:var(--t2)}.lc.on .lpct{color:var(--ac)}
+.genbtn{width:100%;background:var(--ac);color:#000;border:none;border-radius:12px;padding:16px;font-size:17px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;box-shadow:0 4px 24px rgba(232,197,71,.3);margin-bottom:20px;-webkit-appearance:none}
+.genbtn.loading{background:var(--s2);color:var(--t2);box-shadow:none;cursor:not-allowed}
+.spin{width:18px;height:18px;border:2px solid var(--b);border-top-color:var(--a2);border-radius:50%;animation:sp .7s linear infinite}
+@keyframes sp{to{transform:rotate(360deg)}}
+.out{display:none;background:var(--s);border:1px solid var(--b);border-radius:12px;overflow:hidden}
+.out.show{display:block}
+.out-head{background:var(--s2);border-bottom:1px solid var(--b);padding:12px 16px;display:flex;justify-content:space-between;align-items:center}
+.out-hl{display:flex;align-items:center;gap:8px;font-family:monospace;font-size:12px;color:var(--t2)}
+.out-body{padding:20px;font-family:monospace;font-size:13px;line-height:1.8;max-height:65vh;overflow-y:auto;-webkit-overflow-scrolling:touch;white-space:pre-wrap;word-break:break-word}
+.act-row{border-top:1px solid var(--b);padding:12px 16px;display:flex;gap:8px}
+.act{flex:1;background:var(--s2);border:1px solid var(--b);border-radius:8px;color:var(--t2);font-family:monospace;font-size:12px;padding:9px;cursor:pointer;-webkit-appearance:none}
+.info{background:rgba(82,201,124,.08);border:1px solid rgba(82,201,124,.25);border-radius:10px;padding:12px 16px;margin-bottom:16px;font-family:monospace;font-size:12px;color:var(--a3);line-height:1.7}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">市場分析師<span>v3.0</span></div>
+  <div class="live"><div class="dot"></div>即時搜尋</div>
+</header>
+<main>
+  <div class="info">✓ 生成前自動搜尋今日真實市場資料，包含最新股價、財經新聞與事件。</div>
+
+  <div class="card">
+    <div class="sec"><span class="num">1</span>報告類型</div>
+    <div class="tabs">
+      <button class="tab pre on" onclick="selTab(this,'pre')"><span class="zh">盤前日報</span><span class="en">Pre-market</span><div class="bar"></div></button>
+      <button class="tab post" onclick="selTab(this,'post')"><span class="zh">盤後日報</span><span class="en">Post-market</span><div class="bar"></div></button>
+      <button class="tab week" onclick="selTab(this,'week')"><span class="zh">週報</span><span class="en">Weekly</span><div class="bar"></div></button>
+      <button class="tab month" onclick="selTab(this,'month')"><span class="zh">月報</span><span class="en">Monthly</span><div class="bar"></div></button>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="sec"><span class="num">2</span>投資組合模式</div>
+    <div class="modes">
+      <div class="mode on" id="mA" onclick="selMode('A')"><div class="ml">MODE A</div><div class="mn">含持倉</div><div class="md">個人化 P&L 分析</div></div>
+      <div class="mode" id="mB" onclick="selMode('B')"><div class="ml">MODE B</div><div class="mn">公開版本</div><div class="md">無個人持倉資料</div></div>
+    </div>
+    <div class="pform" id="pform">
+      <div class="frow">
+        <div class="fl"><label>TICKER</label><input id="ticker" placeholder="AAPL" autocapitalize="characters"></div>
+        <div class="fl"><label>SHARES</label><input id="shares" type="number" placeholder="100" inputmode="decimal"></div>
+      </div>
+      <div class="frow">
+        <div class="fl"><label>COST BASIS $</label><input id="cost" type="number" placeholder="150.00" inputmode="decimal"></div>
+        <div class="fl"><label>LAST TRADE</label><input id="trade" placeholder="BUY @ 148.5"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="sec"><span class="num">5</span>報告結構</div>
+    <div class="secs" id="secList">
+      <div class="rs on" onclick="tog(this)"><div class="cb"><svg width="10" height="8" viewBox="0 0 10 8"><polyline points="1,4 4,7 9,1" stroke="#000" stroke-width="1.8" fill="none"/></svg></div><span class="sn">① 市場總覽</span></div>
+      <div class="rs on" onclick="tog(this)"><div class="cb"><svg width="10" height="8" viewBox="0 0 10 8"><polyline points="1,4 4,7 9,1" stroke="#000" stroke-width="1.8" fill="none"/></svg></div><span class="sn">② 突發新聞</span></div>
+      <div class="rs on" onclick="tog(this)"><div class="cb"><svg width="10" height="8" viewBox="0 0 10 8"><polyline points="1,4 4,7 9,1" stroke="#000" stroke-width="1.8" fill="none"/></svg></div><span class="sn">③ 技術訊號</span></div>
+      <div class="rs on" onclick="tog(this)"><div class="cb"><svg width="10" height="8" viewBox="0 0 10 8"><polyline points="1,4 4,7 9,1" stroke="#000" stroke-width="1.8" fill="none"/></svg></div><span class="sn">④ 板塊熱力圖</span></div>
+      <div class="rs on" onclick="tog(this)"><div class="cb"><svg width="10" height="8" viewBox="0 0 10 8"><polyline points="1,4 4,7 9,1" stroke="#000" stroke-width="1.8" fill="none"/></svg></div><span class="sn">⑤ Polymarket</span></div>
+      <div class="rs on" onclick="tog(this)"><div class="cb"><svg width="10" height="8" viewBox="0 0 10 8"><polyline points="1,4 4,7 9,1" stroke="#000" stroke-width="1.8" fill="none"/></svg></div><span class="sn">⑥ Reddit 情緒</span></div>
+      <div class="rs" id="pnlSec" onclick="tog(this)"><div class="cb"><svg width="10" height="8" viewBox="0 0 10 8"><polyline points="1,4 4,7 9,1" stroke="#000" stroke-width="1.8" fill="none"/></svg></div><span class="sn">⑦ 持倉 P&L</span></div>
+      <div class="rs on" onclick="tog(this)"><div class="cb"><svg width="10" height="8" viewBox="0 0 10 8"><polyline points="1,4 4,7 9,1" stroke="#000" stroke-width="1.8" fill="none"/></svg></div><span class="sn">⑧ 明日預覽</span></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="sec"><span class="num">6</span>輸出語言</div>
+    <div class="langs">
+      <div class="lc on" id="lTC" onclick="selLang('TC')"><div class="lch">繁體中文版</div><div class="lsb">Taiwan + HK</div><div class="lpct">89%</div></div>
+      <div class="lc" id="lSC" onclick="selLang('SC')"><div class="lch">簡體中文版</div><div class="lsb">Mainland + NA</div><div class="lpct">11%</div></div>
+    </div>
+  </div>
+
+<button class="genbtn" id="genBtn" onclick="generate()"><span id="btnTxt">🔍 搜尋 + 生成報告</span></button>
+
+  <div class="out" id="outPanel">
+    <div class="out-head">
+      <div class="out-hl"><div class="dot"></div><span id="outLabel">報告</span></div>
+      <span style="font-family:monospace;font-size:11px;color:var(--t3)" id="outTime"></span>
+    </div>
+    <div class="out-body" id="outBody"></div>
+    <div class="act-row">
+      <button class="act" onclick="copyOut()">📋 複製</button>
+      <button class="act" onclick="shareOut()">↗ 分享</button>
+      <button class="act" onclick="resetOut()">↺ 清除</button>
+    </div>
+  </div>
+</main>
+
+<script>
+const TZH={pre:'盤前日報',post:'盤後日報',week:'週報',month:'月報'};
+const TEN={pre:'Pre-market',post:'Post-market',week:'Weekly',month:'Monthly'};
+let rtype='pre', mode='A', lang='TC';
+
+function selTab(el,t){document.querySelectorAll('.tab').forEach(b=>b.classList.remove('on'));el.classList.add('on');rtype=t;}
+function selMode(m){
+  mode=m;
+  document.getElementById('mA').classList.toggle('on',m==='A');
+  document.getElementById('mB').classList.toggle('on',m==='B');
+  document.getElementById('pform').style.display=m==='A'?'flex':'none';
+  const p=document.getElementById('pnlSec');
+  m==='A'?p.classList.add('on'):p.classList.remove('on');
+}
+function tog(el){el.classList.toggle('on');}
+function selLang(l){lang=l;document.getElementById('lTC').classList.toggle('on',l==='TC');document.getElementById('lSC').classList.toggle('on',l==='SC');}
+function getSecs(){return[...document.querySelectorAll('.rs.on .sn')].map(s=>s.textContent.replace(/^[①-⑧]\s/,''));}
+
+async function generate(){
+  const btn=document.getElementById('genBtn');
+  if(btn.classList.contains('loading'))return;
+  const secs=getSecs();
+  if(!secs.length){alert('請至少選一個區塊');return;}
+  const ticker=document.getElementById('ticker').value||'';
+  const shares=document.getElementById('shares').value||'';
+  const cost=document.getElementById('cost').value||'';
+  const trade=document.getElementById('trade').value||'';
+  const lg=lang==='TC'?'繁體中文':'简体中文';
+  const today=new Date().toLocaleDateString('zh-TW');
+  const modeNote=mode==='A'&&ticker?`投資組合：${ticker}，${shares}股，成本$${cost}，最近交易：${trade}`:'公開版（無個人持倉）';
+
+  const sys=`你是專業市場分析師，用${lg}撰寫金融報告。必須先用web_search搜尋今日真實市場資料（指數、股價、新聞），再根據真實數據生成報告。每個區塊用【區塊名稱】作為標題，3-5句，含具體數字與方向（多頭+、空頭-、中性=）。`;
+  const usr=`生成${today} ${TZH[rtype]}（${TEN[rtype]}）。${modeNote}。區塊：${secs.join('、')}。請先搜尋今日市場資料再生成。`;
+
+  btn.classList.add('loading');
+  btn.innerHTML='<div class="spin"></div><span>搜尋市場資料中...</span>';
+  const panel=document.getElementById('outPanel');
+  const body=document.getElementById('outBody');
+  panel.classList.add('show');
+  body.innerHTML='<span style="color:var(--t3)">正在搜尋今日市場資料...</span>';
+  document.getElementById('outLabel').textContent=`${TZH[rtype]} · ${lg} · 即時`;
+  document.getElementById('outTime').textContent=new Date().toLocaleTimeString('zh-TW');
+  setTimeout(()=>panel.scrollIntoView({behavior:'smooth',block:'start'}),100);
+
+  try{
+    const r=await fetch('/api/chat',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        model:'claude-sonnet-4-20250514',
+        max_tokens:4000,
+        system:sys,
+        tools:[{type:'web_search_20250305',name:'web_search'}],
+        messages:[{role:'user',content:usr}]
+      })
+    });
+    if(!r.ok)throw new Error(`HTTP ${r.status}`);
+    const d=await r.json();
+    if(d.error)throw new Error(d.error.message||JSON.stringify(d.error));
+
+    if(d.stop_reason==='tool_use'){
+      btn.innerHTML='<div class="spin"></div><span>分析數據中...</span>';
+      const toolResults=d.content.filter(b=>b.type==='tool_use').map(b=>({type:'tool_result',tool_use_id:b.id,content:'搜尋完成'}));
+      const r2=await fetch('/api/chat',{
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({
+          model:'claude-sonnet-4-20250514',
+          max_tokens:4000,
+          system:sys,
+          tools:[{type:'web_search_20250305',name:'web_search'}],
+          messages:[{role:'user',content:usr},{role:'assistant',content:d.content},{role:'user',content:toolResults}]
+        })
+      });
+      if(!r2.ok)throw new Error(`HTTP ${r2.status}`);
+      const d2=await r2.json();
+      if(d2.error)throw new Error(d2.error.message||JSON.stringify(d2.error));
+      const text=d2.content?.filter(b=>b.type==='text').map(b=>b.text).join('')||'';
+      if(!text)throw new Error('回應內容為空');
+      renderOut(text,body);
+    } else {
+      const text=d.content?.filter(b=>b.type==='text').map(b=>b.text).join('')||'';
+      if(!text)throw new Error('回應內容為空');
+      renderOut(text,body);
+    }
+  }catch(e){
+    body.innerHTML=`<span style="color:var(--a4)">⚠ ${e.message}</span>`;
+  }
+  btn.classList.remove('loading');
+  btn.innerHTML='<span id="btnTxt">🔍 重新生成</span>';
+}
+
+function renderOut(text,el){
+  el.innerHTML=text.split('\n').map(l=>{
+    if(!l.trim())return'<div style="height:8px"></div>';
+    if(/^【.+】/.test(l))return`<div style="color:var(--ac);font-weight:700;font-size:15px;margin-top:16px;margin-bottom:4px">${l}</div>`;
+    return`<div style="line-height:1.8">${l.replace(/([+-]?\d+\.?\d*[%點億兆萬]|\$[\d,.]+)/g,'<span style="color:#b57bff">$1</span>')}</div>`;
+  }).join('');
+}
+
+function copyOut(){const t=document.getElementById('outBody').innerText;if(navigator.clipboard)navigator.clipboard.writeText(t).then(()=>alert('已複製'));else{const a=document.createElement('textarea');a.value=t;document.body.appendChild(a);a.select();document.execCommand('copy');document.body.removeChild(a);alert('已複製');}}
+function shareOut(){const t=document.getElementById('outBody').innerText.slice(0,500)+'...';if(navigator.share)navigator.share({title:'市場分析報告',text:t});else copyOut();}
+function resetOut(){document.getElementById('outPanel').classList.remove('show');document.getElementById('genBtn').innerHTML='<span id="btnTxt">🔍 搜尋 + 生成報告</span>';}
+
+// init
+selMode('A');
+</script>
+
+</body>
+</html>
